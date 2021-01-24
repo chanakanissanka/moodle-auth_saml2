@@ -26,6 +26,8 @@
 
 defined('MOODLE_INTERNAL') || die();
 
+$CFG->auth_saml2_disco_url = '';
+
 global $CFG, $saml2auth, $saml2config;
 
 // Check for https login.
