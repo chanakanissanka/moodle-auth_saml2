@@ -69,7 +69,8 @@ class HTTP
 
         if (strstr($current, ":")) {
             $decomposed = explode(":", $current);
-            $port = array_pop($decomposed);
+            //$port = array_pop($decomposed);
+            $port = '';
             if (!is_numeric($port)) {
                 array_push($decomposed, $port);
             }
@@ -113,15 +114,16 @@ class HTTP
      */
     public static function getServerPort()
     {
+        /*
         $default_port = self::getServerHTTPS() ? '443' : '80';
         $port = isset($_SERVER['SERVER_PORT']) ? $_SERVER['SERVER_PORT'] : $default_port;
-
         // Take care of edge-case where SERVER_PORT is an integer
         $port = strval($port);
 
         if ($port !== $default_port) {
             return ':' . $port;
         }
+        */
         return '';
     }
 
@@ -382,6 +384,7 @@ class HTTP
             }
 
             // allow URLs with standard ports specified (non-standard ports must then be allowed explicitly)
+            /*
             if (
                 isset($components['port'])
                 && (($components['scheme'] === 'http'
@@ -391,6 +394,7 @@ class HTTP
             ) {
                 $hostname = $hostname . ':' . $components['port'];
             }
+            */
 
             $self_host = self::getSelfHostWithNonStandardPort();
 
@@ -657,7 +661,8 @@ class HTTP
             $protocol .= '://';
 
             $hostname = self::getServerHost();
-            $port = self::getServerPort();
+            //$port = self::getServerPort();
+            $port = '';
             $path = $globalConfig->getBasePath();
 
             return $protocol . $hostname . $port . $path;
@@ -843,8 +848,9 @@ class HTTP
             if (!empty($appurl)) {
                 $protocol = parse_url($appurl, PHP_URL_SCHEME);
                 $hostname = parse_url($appurl, PHP_URL_HOST);
-                $port = parse_url($appurl, PHP_URL_PORT);
-                $port = !empty($port) ? ':' . $port : '';
+                //$port = parse_url($appurl, PHP_URL_PORT);
+                //$port = !empty($port) ? ':' . $port : '';
+                $port = '';
             } else {
                 // no base URL specified for app, just use the current URL
                 $protocol = self::getServerHTTPS() ? 'https' : 'http';
